@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #d5b8f2;
+}
+h1{
+  font-family: 'Alata';
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--primary);
+  position: relative;
+}
+h2{
+  font-family: 'Alata';
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary);
+  position: relative;
+}
+h5{
+  font-family: 'Alata';
+  font-size: 1.2rem;
+  color: var(--primary);
+  position: relative;
+}
+h6{
+  font-family: 'Alata';
+  font-size: 1rem;
+  color: var(--primary);
+  position: relative;
+}
