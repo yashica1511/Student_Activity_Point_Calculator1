@@ -12,7 +12,7 @@ function Personalinfo() {
                             <h2 className="text-3xl font-bold text-gray-700 mb-6">Personal Information</h2>
                             <div className="flex items-center mb-4">
                                 <label className="block text-gray-700 font-bold mr-4">
-                                    <h5 className="text-xl">Name</h5>
+                                    <h5 className="text-xl">Name:</h5>
                                 </label>
                                 <span className="text-xl">
                                     <h5>Yashica</h5>
@@ -20,7 +20,7 @@ function Personalinfo() {
                             </div>
                             <div className="flex items-center mb-4">
                                 <label className="block text-gray-700 font-bold mr-4">
-                                    <h5 className="text-xl">Roll Number</h5>
+                                    <h5 className="text-xl">Roll Number:</h5>
                                 </label>
                                 <span className="text-xl">
                                     <h5>22ADR123</h5>
@@ -28,7 +28,7 @@ function Personalinfo() {
                             </div>
                             <div className="flex items-center mb-4">
                                 <label className="block text-gray-700 font-bold mr-4">
-                                    <h5 className="text-xl">Year/Class/Section</h5>
+                                    <h5 className="text-xl">Year/Class/Section:</h5>
                                 </label>
                                 <span className="text-xl">
                                     <h5>III/AIDS/B</h5>
@@ -36,7 +36,7 @@ function Personalinfo() {
                             </div>
                             <div className="flex items-center mb-4">
                                 <label className="block text-gray-700 font-bold mr-4">
-                                    <h5 className="text-xl">Email</h5>
+                                    <h5 className="text-xl">Email:</h5>
                                 </label>
                                 <span className="text-xl">
                                     <h5>yashicas.22aid@kongu.edu</h5>

@@ -1,7 +1,0 @@
-# .browserslistrc
-> 0.5%
-last 2 versions
-Firefox ESR
-not dead
-Chrome >= 60
-Brave >= 1

@@ -1,6 +1,6 @@
 import MainPage from '../../Mainpage';
 
-function Student1() {
+function Hod1() {
     return (
         <>
             <MainPage />
@@ -16,12 +16,12 @@ function Student1() {
                         <button
                             className="py-2 px-4 w-40 h-16 rounded-md font-semibold text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-purple-300 text-black shadow-lg"
                         >
-                            APPLY SAP
+                            STAFF ALLOCATION
                         </button>
                         <button
                             className="py-2 px-4 w-40 h-16 rounded-md font-semibold text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-purple-300 text-black shadow-lg"
                         >
-                            UPLOAD
+                            FETCH DATA
                         </button>
                     </div>
                 </div>
@@ -30,4 +30,4 @@ function Student1() {
     );
 }
 
-export default Student1;
+export default Hod1;
