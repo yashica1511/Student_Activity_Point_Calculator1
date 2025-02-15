@@ -1,22 +1,81 @@
-import React, { useState } from 'react';
-import MainPage from '../../Mainpage';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import MainPage from "../../Mainpage";
 
 function Signin() {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [emailError, setEmailError] = useState('');
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
-    setEmailError('');
+    setEmailError("");
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    setPasswordError("");
   };
 
   const handleNextClick = () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (emailPattern.test(email)) {
-      setShowPassword(true); 
+      setShowPassword(true);
     } else {
-      setEmailError('Please enter a valid email address.');
+      setEmailError("Please enter a valid email address.");
+    }
+  };
+
+  const handleLogin = async () => {
+    setPasswordError(""); // Reset errors
+    console.log("🔹 Login button clicked");
+
+    try {
+      let apiUrl = "";
+
+      if (email.includes("@kongu.ac.in")) {
+        if (email === "hod.ai@kongu.ac.in") {
+          apiUrl = "http://localhost:8080/api/hod/login"; // HOD login
+        } else {
+          apiUrl = "http://localhost:8080/api/staff/login"; // Staff login
+        }
+      } else {
+        apiUrl = "http://localhost:8080/api/student/login"; // Student login
+      }
+
+      console.log(`🔹 Sending request to: ${apiUrl}`);
+
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+      console.log("🔹 Server Response:", data);
+
+      if (!response.ok) {
+        throw new Error(data.message || "Login failed");
+      }
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userRole", data.staff ? "staff" : data.student ? "student" : "hod");
+
+      console.log("✅ Logged in:", email);
+
+      if (data.staff) {
+        navigate("/student1"); // Staff Page
+      } else if (data.student) {
+        navigate("/student2"); // Student Page
+      } else {
+        navigate("/hod1"); // HOD Page
+      }
+    } catch (error) {
+      console.error("Login Error:", error.message);
+      setPasswordError(error.message); // Show error near password field
     }
   };
 
@@ -26,13 +85,13 @@ function Signin() {
       <div className="fixed inset-0 flex items-center justify-center">
         <div className="w-full sm:w-full md:w-4/5 lg:w-4/5 xl:w-3/4 2xl:w-2/3 min-h-[75vh] bg-[rgba(255,255,255,0.85)] rounded-xl px-4 sm:px-6 md:px-8 lg:px-10 xl:px-2">
           <div className="grid grid-cols-1 sm:grid-cols-2">
-            <div className='p-6 sm:p-8 md:p-10 lg:p-12 flex flex-col justify-center'> 
+            <div className="p-6 sm:p-8 md:p-10 lg:p-12 flex flex-col justify-center">
               <div className="flex items-center justify-center mb-4">
-                <div className="relative w-12 h-12 mt-2"> 
+                <div className="relative w-12 h-12 mt-2">
                   <img src="./images/logo.png" alt="Logo" className="w-full h-full rounded-lg border border-gray-400" />
                 </div>
               </div>
-              <div className="flex items-center justify-center mb-4"> 
+              <div className="flex items-center justify-center mb-4">
                 <h1 className="text-2xl font-bold text-center">Kongu Engineering College</h1>
               </div>
               <div className="mt-6">
@@ -49,12 +108,13 @@ function Signin() {
                     type="text"
                     value={email}
                     onChange={handleEmailChange}
-                    className={`w-full h-12 px-3 py-2 placeholder-gray-400 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-base ${emailError ? 'border-red-500' : ''}`}
+                    className={`w-full h-12 px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-base ${emailError ? "border-red-500" : ""}`}
                     placeholder="Enter your email"
                   />
                   {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
                 </div>
               </div>
+
               <div className="mt-8">
                 {showPassword ? (
                   <>
@@ -62,10 +122,12 @@ function Signin() {
                     <div className="mt-2">
                       <input
                         type="password"
-                        className="w-full h-12 px-3 py-2 placeholder-gray-400 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-base"
-                        id='pwd'
+                        value={password}
+                        onChange={handlePasswordChange}
+                        className={`w-full h-12 px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-base ${passwordError ? "border-red-500" : ""}`}
                         placeholder="Enter your password"
                       />
+                      {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
                     </div>
                     <div className="flex items-start mt-2">
                       <div className="text-md">
@@ -76,6 +138,7 @@ function Signin() {
                     </div>
                     <div className="mt-2 flex justify-end">
                       <button
+                        onClick={handleLogin}
                         className="mt-6 py-2 px-4 w-36 h-12 rounded-md font-semibold focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-md bg-blue-500 text-white">
                         Log In
                       </button>

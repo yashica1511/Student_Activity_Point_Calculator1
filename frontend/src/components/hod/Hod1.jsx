@@ -1,6 +1,14 @@
 import MainPage from '../../Mainpage';
+import { useNavigate } from 'react-router-dom';
 
 function Hod1() {
+    const navigate = useNavigate(); 
+    const page2 = () => {
+        navigate('/hod2');
+    };
+    const page3 = () => {
+        navigate('/fetch_data');
+    };
     return (
         <>
             <MainPage />
@@ -14,12 +22,12 @@ function Hod1() {
                     </h1>
                     <div className="flex flex-col sm:flex-row justify-center items-center mt-10 sm:mt-16 space-y-4 sm:space-y-0 sm:space-x-8">
                         <button
-                            className="py-2 px-4 w-40 h-16 rounded-md font-semibold text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-purple-300 text-black shadow-lg"
+                            className="py-2 px-4 w-40 h-16 rounded-md font-semibold text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-purple-300 text-black shadow-lg " onClick={page2}
                         >
                             STAFF ALLOCATION
                         </button>
                         <button
-                            className="py-2 px-4 w-40 h-16 rounded-md font-semibold text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-purple-300 text-black shadow-lg"
+                            className="py-2 px-4 w-40 h-16 rounded-md font-semibold text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-purple-300 text-black shadow-lg" onClick={page3}
                         >
                             FETCH DATA
                         </button>

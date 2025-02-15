@@ -10,7 +10,7 @@ const login = async (request, response) => {
   try {
     const { email, password } = request.body;
 
-    if (email == "hodai@kongu.ac.in" && password == "hodai") {
+    if (email == "hod.ai@kongu.ac.in" && password == "hodai") {
       return response.status(200).json({
         message: "HOD signed in successfully",
       });
@@ -24,7 +24,7 @@ const login = async (request, response) => {
 //All get staff
 const getAllStaff = async (request, response) => {
   try {
-    const staff = await staffModel.find({}, "Name email");
+    const staff = await staffModel.find({}, "Name email isallocated");
     if (!staff) {
       return response.status(404).json({ message: "Staff not found" });
     }
