@@ -24,16 +24,41 @@ const login = async (request, response) => {
 //All get staff
 const getAllStaff = async (request, response) => {
   try {
-    const staff = await staffModel.find({}, "Name email isallocated");
-    if (!staff) {
+    // Fetch all staff details, including advisor-related fields
+    const staff = await staffModel.find({}, { 
+      Name: 1, 
+      email: 1, 
+      isCoordinator: 1, 
+      isallocated: 1, 
+      section: 1, 
+      semester: 1, 
+      year: 1
+    }).lean();
+
+    if (!staff || staff.length === 0) {
       return response.status(404).json({ message: "Staff not found" });
     }
-    return response.status(200).json(staff);
+
+
+    // Ensure proper structure in response
+    const updatedStaff = staff.map((member) => ({
+      ...member,
+      isallocated: member.isCoordinator ?? false, // ✅ Ensure `isallocated` exists
+      section: member.section || "N/A", // ✅ Avoid null values
+      semester: member.semester || "N/A",
+      year: member.year || "N/A",
+      isCoordinator: member.isCoordinator ?? false, // ✅ Ensure `isCoordinator` exists
+    }));
+
+    return response.status(200).json(updatedStaff);
   } catch (error) {
-    console.error("Error in StaffList: ", error);
+    console.error("❌ Error in StaffList:", error);
     return response.status(500).json({ message: "Server error", error });
   }
 };
+
+
+
 
 //Allocate SAP coordinator
 const allocateStaff = async (request, response) => {
